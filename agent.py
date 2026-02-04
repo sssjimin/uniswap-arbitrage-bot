@@ -7,7 +7,7 @@ from dotenv import load_dotenv
 from xai_sdk import Client  # xAI SDK 클라이언트 import 추가
 from xai_sdk.chat import user, system  # 챗 역할 헬퍼 import 추가
 
-load_dotenv(dotenv_path=os.path.expanduser('~/.env'))  # .env 파일 로드 – 환경 변수 불러오기 (XAI_API_KEY 포함)
+load_dotenv()  # .env 파일 로드 – 환경 변수 불러오기 (XAI_API_KEY 포함)
 
 # 연결 설정: Infura로 Ethereum 네트워크 연결
 infura_url = os.getenv('INFURA_URL')
