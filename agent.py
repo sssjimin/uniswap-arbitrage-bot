@@ -33,7 +33,7 @@ def get_other_dex_price(token_symbol):
     else:
         print("CoinGecko API 오류")
         return None
-
+ 
 # Grok LLM 호출 함수 (xAI API 문서 기반: https://docs.x.ai/docs/tutorial)
 def ask_grok(query):
     api_key = os.getenv("XAI_API_KEY")  # .env에서 XAI_API_KEY 불러옴
