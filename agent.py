@@ -26,21 +26,19 @@ if not w3.is_connected():
 provider_uri = w3.provider.endpoint_uri if hasattr(w3.provider, 'endpoint_uri') else infura_url
 print(f"DEBUG: provider_uri = '{provider_uri}'")  # 확인
 
-# Uniswap 초기화 전에 net.version 테스트
+# netid 수동 설정 – net.version 대신 chain_id 사용 (오류 우회)
 try:
-    net_version = w3.net.version
-    print(f"DEBUG: 네트워크 버전 = {net_version}")
+    chain_id = w3.eth.chain_id
+    print(f"DEBUG: 체인 ID = {chain_id}")  # mainnet: 1, Sepolia: 11155111
+    netid = chain_id
 except Exception as e:
-    print(f"net.version 오류: {e}")
-    # 우회: mainnet ID 1, Sepolia 11155111
-    netid = 1
-else:
-    netid = int(net_version)
+    print(f"chain_id 오류: {e}")
+    netid = 1  # mainnet 기본, 테스트넷 11155111로 변경
 
 address = os.getenv('WALLET_ADDRESS')
 private_key = os.getenv('PRIVATE_KEY')
 uniswap = Uniswap(address=address, private_key=private_key, version=3, provider=w3)
-uniswap.netid = netid  # 수동 netid 설정 (버그 우회)
+uniswap.netid = netid
 
 # Uniswap 가격 쿼리 함수 (예: 1 ETH가 USDC로 얼마?)
 def get_uniswap_price(token_in, token_out, qty):
