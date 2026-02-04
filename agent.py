@@ -11,6 +11,10 @@ load_dotenv()  # .env 파일 로드 – 환경 변수 불러오기 (XAI_API_KEY 
 
 # 연결 설정: Infura로 Ethereum 네트워크 연결
 infura_url = os.getenv('INFURA_URL')
+print(f"DEBUG: INFURA_URL = {infura_url}")  # 출력 확인 – None 나오면 문제
+if infura_url is None or not infura_url.startswith('https://'):
+    print("ERROR: INFURA_URL이 로드되지 않았거나 유효하지 않습니다. .env 확인하세요.")
+    exit()
 w3 = Web3(Web3.HTTPProvider(infura_url))
 if not w3.is_connected():
     print("Ethereum 연결 실패 – INFURA_URL 확인하세요")
